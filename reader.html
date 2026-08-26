@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Reading… — Note Lab</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="reader">
+
+  <div class="reader-topbar">
+    <a href="index.html" class="icon-btn" aria-label="Back to library">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </a>
+    <div class="reader-title" id="readerTitle">…</div>
+    <button class="icon-btn" id="tocBtn" aria-label="Table of contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    </button>
+  </div>
+
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+  <main class="reader-content" id="readerContent">
+    <article class="page" id="page"></article>
+  </main>
+
+  <nav class="reader-menubar">
+    <button class="menu-btn" id="typoBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 20h6M12 5v15"/></svg>
+      <span>Aa</span>
+    </button>
+    <div class="nav-arrows">
+      <button class="icon-btn" id="prevBtn" aria-label="Previous unit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="icon-btn" id="nextBtn" aria-label="Next unit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div style="min-width:3.4rem;text-align:center;font-size:.78rem;color:var(--muted)" id="posLabel"></div>
+  </nav>
+</div>
+
+<!-- TOC drawer -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Contents</h2>
+    <button class="icon-btn" id="drawerClose" aria-label="Close contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <label class="drawer-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input type="text" id="tocSearch" placeholder="Search units…" autocomplete="off">
+  </label>
+  <div class="drawer-units" id="drawerUnits"></div>
+</aside>
+
+<!-- Typography sheet -->
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<section class="typo-sheet" id="typoSheet" aria-label="Reading settings">
+  <div class="sheet-handle"></div>
+
+  <div class="typo-row">
+    <span class="typo-label">Size</span>
+    <div class="font-ctrl">
+      <button class="font-btn" id="fontMinus" aria-label="Smaller text">A&#8722;</button>
+      <span class="font-preview" id="fontPreview">Aa</span>
+      <button class="font-btn" id="fontPlus" aria-label="Larger text">A+</button>
+    </div>
+  </div>
+
+  <div class="typo-row">
+    <span class="typo-label">Theme</span>
+    <div class="theme-dots">
+      <button class="theme-dot dot-light" data-theme-val="light" aria-label="Light theme"></button>
+      <button class="theme-dot dot-sepia" data-theme-val="sepia" aria-label="Sepia theme"></button>
+      <button class="theme-dot dot-dark" data-theme-val="dark" aria-label="Dark theme"></button>
+    </div>
+  </div>
+
+  <div class="typo-row">
+    <span class="typo-label">Font</span>
+    <div class="seg-group" id="fontFamilyGroup">
+      <button class="seg-btn on" data-fontval="serif">Serif</button>
+      <button class="seg-btn" data-fontval="sans">Sans</button>
+    </div>
+  </div>
+</section>
+
+<script src="js/modules.js"></script>
+<script src="data/ai.js"></script>
+<script src="data/programming.js"></script>
+<script src="data/database.js"></script>
+<script src="data/networking.js"></script>
+<script src="js/md.js"></script>
+<script src="js/reader.js"></script>
+</body>
+</html>
