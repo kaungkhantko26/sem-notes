@@ -72,7 +72,18 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   transition: background .25s ease, color .25s ease;
+}
+
+#viewHome,
+#viewDetail {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  width: 100%;
 }
 
 button { font-family: inherit; color: inherit; background: none; border: none; cursor: pointer; }
@@ -117,7 +128,7 @@ a { color: inherit; text-decoration: none; }
   font-size: .95rem;
 }
 
-.home-main { max-width: 60rem; margin: 0 auto; padding: 1rem 1.25rem 4rem; }
+.home-main { max-width: 60rem; width: 100%; margin: 0 auto; padding: 1rem 1.25rem 4rem; flex: 1 0 auto; }
 
 /* ============ Keyword finder ============ */
 
@@ -377,8 +388,10 @@ mark.kw-hit {
 
 .detail-main {
   max-width: 42rem;
+  width: 100%;
   margin: 0 auto;
   padding: 1.4rem 1.25rem 4rem;
+  flex: 1 0 auto;
 }
 
 .unit-list {
@@ -798,8 +811,12 @@ mark.kw-hit {
 
 /* Footer */
 .site-footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  width: 100%;
   max-width: 60rem;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 1.6rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
   display: flex;
