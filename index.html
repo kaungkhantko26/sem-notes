@@ -3,40 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#fdfdfb">
+  <meta name="theme-color" content="#f7f7f5">
   <title>Note Lab — 2nd Sem Notes</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-view="home">
+<body>
 
   <!-- Home view -->
-  <header class="home-header" id="homeHeader">
-    <div class="brand">
-      <span class="logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 6.5C10.4 5 8.2 4.5 5.5 4.5c-.9 0-1.7.06-2.5.18V18.7c.8-.12 1.6-.18 2.5-.18 2.7 0 4.9.5 6.5 2 1.6-1.5 3.8-2 6.5-2 .9 0 1.7.06 2.5.18V4.68c-.8-.12-1.6-.18-2.5-.18-2.7 0-4.9.5-6.5 2z"/>
-          <path d="M12 6.5v14"/>
-        </svg>
-      </span>
-      <span>Note Lab</span>
+  <div id="viewHome">
+    <header class="home-header">
+      <div class="brand">
+        <span class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 6.5C10.4 5 8.2 4.5 5.5 4.5c-.9 0-1.7.06-2.5.18V18.7c.8-.12 1.6-.18 2.5-.18 2.7 0 4.9.5 6.5 2 1.6-1.5 3.8-2 6.5-2 .9 0 1.7.06 2.5.18V4.68c-.8-.12-1.6-.18-2.5-.18-2.7 0-4.9.5-6.5 2z"/>
+            <path d="M12 6.5v14"/>
+          </svg>
+        </span>
+        <span>Note Lab</span>
+      </div>
+      <p class="home-sub">2nd Semester — calm, focused reading for your notes.</p>
+    </header>
+
+    <main class="home-main">
+      <p class="section-label">Modules</p>
+      <div class="module-grid" id="moduleGrid"></div>
+    </main>
+  </div>
+
+  <!-- Module detail view -->
+  <div id="viewDetail" hidden>
+    <div class="detail-topbar">
+      <button class="icon-btn" id="backBtn" aria-label="Back to modules">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="detail-title" id="detailTitle"></div>
     </div>
-    <p class="home-sub">2nd Semester — calm, focused reading for your notes.</p>
-  </header>
 
-  <main class="home-main" id="homeMain">
-    <p class="section-label">Modules</p>
-    <div class="module-grid" id="moduleGrid"></div>
-
-    <p class="section-label" id="unitsLabel" hidden></p>
-    <div class="unit-list" id="unitList" hidden></div>
-  </main>
-
-  <!-- Module detail topbar -->
-  <div class="detail-topbar" id="detailTopbar" hidden>
-    <button class="icon-btn" id="backBtn" aria-label="Back to modules">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <div class="detail-title" id="detailTitle"></div>
+    <main class="detail-main">
+      <p class="section-label" id="unitsLabel"></p>
+      <div class="unit-list" id="unitList"></div>
+    </main>
   </div>
 
   <script src="js/modules.js"></script>

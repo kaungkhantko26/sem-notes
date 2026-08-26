@@ -20,13 +20,14 @@
     net: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c3.2 3.6 3.2 13.4 0 17M12 3.5c-3.2 3.6-3.2 13.4 0 17"/></svg>'
   };
 
+  function showView(name) {
+    $('#viewHome').hidden = name !== 'home';
+    $('#viewDetail').hidden = name !== 'detail';
+  }
+
   function renderHome() {
-    $('#homeHeader').hidden = false;
-    $('#homeMain').style.display = '';
-    $('#detailTopbar').hidden = true;
-    $('#unitsLabel').hidden = true;
-    $('#unitList').hidden = true;
-    $('#moduleGrid').style.display = '';
+    showView('home');
+    document.title = 'Note Lab — 2nd Sem Notes';
 
     var grid = $('#moduleGrid');
     grid.innerHTML = '';
@@ -64,13 +65,9 @@
     var data = window.NOTES_DATA[mod.id] || { units: [] };
     var last = store.call(mod);
 
-    $('#homeHeader').hidden = true;
-    $('#moduleGrid').style.display = 'none';
-    $('#detailTopbar').hidden = false;
+    showView('detail');
     $('#detailTitle').textContent = mod.title;
-    $('#unitsLabel').hidden = false;
-    $('#unitsLabel').textContent = data.units.length + ' Units';
-    $('#unitList').hidden = false;
+    $('#unitsLabel').textContent = data.units.length + ' Unit' + (data.units.length === 1 ? '' : 's');
 
     var list = $('#unitList');
     list.innerHTML = '';

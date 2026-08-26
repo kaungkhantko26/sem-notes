@@ -78,6 +78,8 @@ body {
 button { font-family: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 
+[hidden] { display: none !important; }
+
 /* ============ Home ============ */
 
 .home-header {
@@ -276,10 +278,13 @@ a { color: inherit; text-decoration: none; }
   text-overflow: ellipsis;
 }
 
-.unit-list {
+.detail-main {
   max-width: 42rem;
   margin: 0 auto;
   padding: 1.4rem 1.25rem 4rem;
+}
+
+.unit-list {
   display: grid;
   gap: .85rem;
   perspective: 900px;
