@@ -111,6 +111,131 @@
   window.addEventListener('hashchange', route);
   route();
 
+  // ---- Keyword finder (search across every module & unit) ----
+  var searchInput = $('#globalSearch');
+  var resultsBox = $('#searchResults');
+
+  var INDEX = [];
+  window.MODULES.forEach(function (mod) {
+    var d = window.NOTES_DATA[mod.id];
+    if (!d || !d.units) return;
+    d.units.forEach(function (u) { INDEX.push({ mod: mod, unit: u }); });
+  });
+
+  function escHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function escRe(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  function stripMd(s) {
+    return s
+      .replace(/^#{1,6}\s+/gm, '')
+      .replace(/\*\*|__|`|^>\s?/gm, '')
+      .replace(/^\s*[-*+]\s+\s*/gm, '')
+      .replace(/^\s*\d+[.)]\s+/gm, '')
+      .replace(/\s*\|\s*/g, ' ')
+      .replace(/\n+/g, ' ');
+  }
+  function markTerms(escapedText, words) {
+    if (!words.length) return escapedText;
+    var re = new RegExp('(' + words.map(escRe).join('|') + ')', 'gi');
+    return escapedText.replace(re, '<mark>$1</mark>');
+  }
+  function makeSnippet(md, words) {
+    var plain = stripMd(md);
+    var low = plain.toLowerCase();
+    var pos = -1;
+    for (var i = 0; i < words.length; i++) {
+      var p = low.indexOf(words[i]);
+      if (p > -1) { pos = p; break; }
+    }
+    if (pos < 0) pos = 0;
+    var start = Math.max(0, pos - 42);
+    var end = Math.min(plain.length, pos + 115);
+    var s = (start > 0 ? '\u2026' : '') +
+            plain.slice(start, end).replace(/\s+/g, ' ').trim() +
+            (end < plain.length ? '\u2026' : '');
+    return markTerms(escHtml(s), words);
+  }
+
+  function runSearch(raw) {
+    if (!resultsBox || !searchInput) return;
+    var q = (raw || '').trim();
+    var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) {
+      resultsBox.hidden = true;
+      resultsBox.innerHTML = '';
+      return;
+    }
+
+    var scored = [];
+    INDEX.forEach(function (it) {
+      var title = (it.unit.title + ' ' + it.mod.short).toLowerCase();
+      var body = stripMd(it.unit.md).toLowerCase();
+      var score = 0, allFound = true;
+      words.forEach(function (w) {
+        var inTitle = title.indexOf(w) > -1;
+        var inBody = body.indexOf(w) > -1;
+        if (!inTitle && !inBody) allFound = false;
+        if (inTitle) score += 5;
+        if (inBody) score += 1;
+      });
+      if (allFound) scored.push({ it: it, score: score });
+    });
+
+    scored.sort(function (a, b) { return b.score - a.score; });
+
+    var out = '<p class="result-head">' + scored.length + ' result' + (scored.length === 1 ? '' : 's') + '</p>';
+    if (!scored.length) {
+      out = '<p class="no-results">No matching notes for \u201C' + escHtml(q) + '\u201D.</p>';
+    }
+    scored.slice(0, 12).forEach(function (r) {
+      out +=
+        '<button class="result-item" data-m="' + r.it.mod.id + '" data-u="' + r.it.unit.id + '">' +
+          '<span class="result-path"><i class="rp-dot"></i>' + escHtml(r.it.mod.short) + ' &#183; Unit ' + r.it.unit.num + '</span>' +
+          '<span class="result-title">' + markTerms(escHtml(r.it.unit.title), words) + '</span>' +
+          '<span class="result-snippet">' + makeSnippet(r.it.unit.md, words) + '</span>' +
+        '</button>';
+    });
+    resultsBox.innerHTML = out;
+    resultsBox.hidden = false;
+  }
+
+  if (searchInput && resultsBox) {
+    var debounceTimer = null;
+    searchInput.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () { runSearch(searchInput.value); }, 140);
+    });
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        runSearch('');
+        searchInput.blur();
+      }
+    });
+    resultsBox.addEventListener('click', function (e) {
+      var item = e.target.closest('.result-item');
+      if (!item) return;
+      var q = searchInput.value.trim();
+      location.href = 'reader.html?m=' + item.getAttribute('data-m') +
+                      '&u=' + item.getAttribute('data-u') +
+                      (q ? '&q=' + encodeURIComponent(q) : '');
+    });
+    document.addEventListener('keydown', function (e) {
+      var typing = /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);
+      if (e.key === '/' && !typing) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Footer year
+  var yr = $('#footerYear');
+  if (yr) yr.textContent = String(new Date().getFullYear());
+
   // Subtle 3D tilt on module cards (desktop pointers only)
   var finePointer = window.matchMedia('(pointer: fine)').matches;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -70,11 +70,20 @@
         continue;
       }
 
-      // Unordered list
+      // Unordered list (with optional GitHub-style checkboxes)
       if (/^\s*[-*+]\s+/.test(line)) {
         var ul = '<ul>';
         while (i < lines.length && /^\s*[-*+]\s+/.test(lines[i])) {
-          ul += '<li>' + inline(lines[i].replace(/^\s*[-*+]\s+/, '')) + '</li>'; i++;
+          var raw = lines[i].replace(/^\s*[-*+]\s+/, '');
+          var task = raw.match(/^\[([ xX])\]\s+(.*)$/);
+          if (task) {
+            var done = task[1].toLowerCase() === 'x';
+            ul += '<li class="task' + (done ? ' done' : '') + '"><span class="tick">' +
+                  (done ? '\u2611' : '\u2610') + '</span>' + inline(task[2]) + '</li>';
+          } else {
+            ul += '<li>' + inline(raw) + '</li>';
+          }
+          i++;
         }
         out.push(ul + '</ul>');
         continue;

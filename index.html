@@ -4,8 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7f5">
-  <title>Note Lab — 2nd Sem Notes</title>
-  <link rel="stylesheet" href="css/style.css?v=3">
+
+  <!-- SEO -->
+  <title>Note Lab — 2nd Sem Study Notes | AI, Programming, Database, Networking</title>
+  <meta name="description" content="Kindle-style study notes for the 2nd semester: Fundamentals of Artificial Intelligence, Programming, Database Systems and Computer Networking. Read anywhere with themes, offline support and instant keyword search.">
+  <meta name="keywords" content="note lab, kaung khant ko, study notes, 2nd semester notes, fundamentals of AI, artificial intelligence recap, rule-based systems, expert systems, fuzzy logic, probability, programming notes, database systems notes, computer networking notes, myanmar notes, kindle style reader">
+  <meta name="author" content="Kaung Khant Ko">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kaungkhantko26.github.io/sem-notes/">
+
+  <!-- Social preview: Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Note Lab">
+  <meta property="og:title" content="Note Lab — 2nd Sem Study Notes">
+  <meta property="og:description" content="Fundamentals of AI, Programming, Database and Networking notes in a calm Kindle-style reader. Themes, offline support, instant keyword search.">
+  <meta property="og:url" content="https://kaungkhantko26.github.io/sem-notes/">
+  <meta property="og:image" content="https://kaungkhantko26.github.io/sem-notes/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Note Lab — Kindle-style study notes for AI, Programming, Database and Networking">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Social preview: Twitter/X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Note Lab — 2nd Sem Study Notes">
+  <meta name="twitter:description" content="AI, Programming, Database & Networking notes in a minimal Kindle-style reader with instant keyword search.">
+  <meta name="twitter:image" content="https://kaungkhantko26.github.io/sem-notes/assets/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=5">
+  <link rel="apple-touch-icon" href="assets/favicon.svg?v=5">
+  <link rel="stylesheet" href="css/style.css?v=5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Note Lab",
+    "url": "https://kaungkhantko26.github.io/sem-notes/",
+    "description": "Kindle-style study notes for 2nd semester modules: Fundamentals of AI, Programming, Database Systems, Computer Networking.",
+    "author": { "@type": "Person", "name": "Kaung Khant Ko", "url": "https://github.com/kaungkhantko26" }
+  }
+  </script>
 </head>
 <body>
 
@@ -25,6 +64,15 @@
     </header>
 
     <main class="home-main">
+      <!-- Keyword finder -->
+      <section class="search-zone" aria-label="Search all notes">
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="search" id="globalSearch" placeholder="Find keywords across every note…" autocomplete="off" enterkeyhint="search">
+        </label>
+        <div class="search-results" id="searchResults" hidden></div>
+      </section>
+
       <p class="section-label">Modules</p>
       <div class="module-grid" id="moduleGrid"></div>
     </main>
@@ -45,12 +93,17 @@
     </main>
   </div>
 
-  <script src="js/modules.js?v=3"></script>
-  <script src="data/ai.js?v=3"></script>
-  <script src="data/programming.js?v=3"></script>
-  <script src="data/database.js?v=3"></script>
-  <script src="data/networking.js?v=3"></script>
-  <script src="js/md.js?v=3"></script>
-  <script src="js/app.js?v=3"></script>
+  <footer class="site-footer">
+    <span>&#169; <span id="footerYear">2026</span> Note Lab &#183; 2nd Semester</span>
+    <a href="https://github.com/kaungkhantko26" target="_blank" rel="noopener">Built by Kaung Khant Ko</a>
+  </footer>
+
+  <script src="js/modules.js?v=5"></script>
+  <script src="data/ai.js?v=5"></script>
+  <script src="data/programming.js?v=5"></script>
+  <script src="data/database.js?v=5"></script>
+  <script src="data/networking.js?v=5"></script>
+  <script src="js/md.js?v=5"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>
