@@ -1,6 +1,10 @@
 /* Note Lab — home page */
 (function () {
-  var $ = function (s) { return document.querySelector(s); };
+  var $ = function (s) {
+    var el = document.querySelector(s);
+    if (!el) console.warn('[NoteLab] missing element:', s);
+    return el;
+  };
 
   // Theme
   var theme = localStorage.getItem('nl:theme') || 'light';
@@ -21,8 +25,10 @@
   };
 
   function showView(name) {
-    $('#viewHome').hidden = name !== 'home';
-    $('#viewDetail').hidden = name !== 'detail';
+    var home = $('#viewHome');
+    var detail = $('#viewDetail');
+    if (home) home.hidden = name !== 'home';
+    if (detail) detail.hidden = name !== 'detail';
   }
 
   function renderHome() {
@@ -30,6 +36,7 @@
     document.title = 'Note Lab — 2nd Sem Notes';
 
     var grid = $('#moduleGrid');
+    if (!grid) return;
     grid.innerHTML = '';
     window.MODULES.forEach(function (mod) {
       var data = window.NOTES_DATA[mod.id];
@@ -66,10 +73,13 @@
     var last = store.call(mod);
 
     showView('detail');
-    $('#detailTitle').textContent = mod.title;
-    $('#unitsLabel').textContent = data.units.length + ' Unit' + (data.units.length === 1 ? '' : 's');
+    var titleEl = $('#detailTitle');
+    if (titleEl) titleEl.textContent = mod.title;
+    var labelEl = $('#unitsLabel');
+    if (labelEl) labelEl.textContent = data.units.length + ' Unit' + (data.units.length === 1 ? '' : 's');
 
     var list = $('#unitList');
+    if (!list) return;
     list.innerHTML = '';
     data.units.forEach(function (u) {
       var item = document.createElement('button');
@@ -96,7 +106,8 @@
     if (h) renderDetail(h[1]); else renderHome();
   }
 
-  $('#backBtn').addEventListener('click', function () { location.hash = ''; });
+  var backBtn = $('#backBtn');
+  if (backBtn) backBtn.addEventListener('click', function () { location.hash = ''; });
   window.addEventListener('hashchange', route);
   route();
 
@@ -104,6 +115,8 @@
   var finePointer = window.matchMedia('(pointer: fine)').matches;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var grid = $('#moduleGrid');
+
+  if (!grid) return;
 
   function resetTilt() {
     grid.querySelectorAll('.module-card').forEach(function (c) {
