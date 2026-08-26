@@ -5,7 +5,7 @@ window.NOTES_DATA['networking'] = {
   code: 'NET',
   title: 'Computer Networking',
   short: 'Computer Networking',
-  accent: '#9c36b5',
+  accent: '#71675c',
   icon: 'net',
   units: [
     {

@@ -5,7 +5,7 @@ window.NOTES_DATA['database'] = {
   code: 'DB',
   title: 'Database Management Systems',
   short: 'Database Systems',
-  accent: '#2f9e44',
+  accent: '#656d60',
   icon: 'db',
   units: [
     {

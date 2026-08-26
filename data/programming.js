@@ -5,7 +5,7 @@ window.NOTES_DATA['programming'] = {
   code: 'PRG',
   title: 'Programming Fundamentals',
   short: 'Fundamentals of Programming',
-  accent: '#1971c2',
+  accent: '#5b6472',
   icon: 'code',
   units: [
     {

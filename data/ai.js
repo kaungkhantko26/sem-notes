@@ -5,7 +5,7 @@ window.NOTES_DATA["ai"] = {
   "code": "AI",
   "title": "Fundamentals of Artificial Intelligence",
   "short": "Fundamentals of AI",
-  "accent": "#e8590c",
+  "accent": "#63666e",
   "icon": "brain",
   "units": [
     {

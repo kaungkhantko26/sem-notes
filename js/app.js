@@ -13,6 +13,13 @@
     catch (e) { return null; }
   }
 
+  var ICONS = {
+    brain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="2.4"/><path d="M12 3v6.6M12 14.4V21M3 12h6.6M14.4 12H21M5.6 5.6l3.8 3.8m5.2 5.2 3.8 3.8m0-12.8-3.8 3.8m-5.2 5.2-3.8 3.8"/></svg>',
+    code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7L4 12l5 5M15 7l5 5-5 5"/></svg>',
+    db: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5.5" rx="7" ry="2.8"/><path d="M5 5.5v13c0 1.55 3.1 2.8 7 2.8s7-1.25 7-2.8v-13"/><path d="M5 12c0 1.55 3.1 2.8 7 2.8s7-1.25 7-2.8"/></svg>',
+    net: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c3.2 3.6 3.2 13.4 0 17M12 3.5c-3.2 3.6-3.2 13.4 0 17"/></svg>'
+  };
+
   function renderHome() {
     $('#homeHeader').hidden = false;
     $('#homeMain').style.display = '';
@@ -34,10 +41,8 @@
       card.style.setProperty('--accent', mod.accent);
       card.innerHTML =
         '<div class="mc-top">' +
-          '<span class="mc-icon" style="background:' + mod.accent + '">' +
-            (mod.id === 'ai' ? '&#129504;' : mod.id === 'programming' ? '&#60;&#47;&#62;' : mod.id === 'database' ? '&#128451;' : '&#127760;') +
-          '</span>' +
-          '<span class="mc-code">' + mod.code + '</span>' +
+          '<span class="mc-icon">' + (ICONS[mod.icon] || '') + '</span>' +
+          '<span class="mc-chip"><i class="dot"></i>' + mod.code + '</span>' +
         '</div>' +
         '<div class="mc-title">' + mod.short + '</div>' +
         (units.length && !(units.length === 1 && units[0].md.indexOf('coming soon') !== -1)
@@ -97,4 +102,32 @@
   $('#backBtn').addEventListener('click', function () { location.hash = ''; });
   window.addEventListener('hashchange', route);
   route();
+
+  // Subtle 3D tilt on module cards (desktop pointers only)
+  var finePointer = window.matchMedia('(pointer: fine)').matches;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var grid = $('#moduleGrid');
+
+  function resetTilt() {
+    grid.querySelectorAll('.module-card').forEach(function (c) {
+      c.classList.remove('tilting');
+      c.style.setProperty('--rx', '0deg');
+      c.style.setProperty('--ry', '0deg');
+    });
+  }
+
+  if (finePointer && !reducedMotion) {
+    grid.addEventListener('pointermove', function (e) {
+      var card = e.target.closest('.module-card');
+      resetTilt();
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - .5;
+      var py = (e.clientY - r.top) / r.height - .5;
+      card.classList.add('tilting');
+      card.style.setProperty('--ry', (px * 6).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', (-py * 6).toFixed(2) + 'deg');
+    });
+    grid.addEventListener('pointerleave', resetTilt);
+  }
 })();
